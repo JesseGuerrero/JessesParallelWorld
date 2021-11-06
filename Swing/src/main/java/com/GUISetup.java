@@ -1,30 +1,28 @@
+package com;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class Test {
-    public static JLabel display;
-    public static JLabel playerList;
-    public static JLabel chatbox;
-    public static JButton north;
-    public static JButton south;
-    public static JButton west;
-    public static JButton east;
-    public static JButton yell;
+import static com.Client.*;
+import static com.Utils.*;
 
-    public static void populateGUI(Container pane) {
-        pane.setLayout(new GridBagLayout());
+public class GUISetup {
+    public static void init() {
+        panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
         playerList = new JLabel("<html>dsfgsxdfgdxsfg<br>test");
         playerList.setOpaque(true);
         playerList.setBackground(new Color(255, 255, 255, 100));
 
-        display = new JLabel("", getMainImage("killbill.jpeg"), JLabel.CENTER);
+        display = new JLabel("", getMainImage("bedroom.jpg"), JLabel.CENTER);
         display.setHorizontalTextPosition(JLabel.LEFT);
         display.setVerticalTextPosition(JLabel.TOP);
         c.anchor = GridBagConstraints.NORTHWEST;
@@ -33,9 +31,9 @@ public class Test {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy =0;
-        pane.add(playerList, c);
+        panel.add(playerList, c);
         c.fill = GridBagConstraints.HORIZONTAL;
-        pane.add(display, c);
+        panel.add(display, c);
 
         north = new JButton("North");
         north.setPreferredSize(new Dimension(8, 8));
@@ -45,7 +43,7 @@ public class Test {
         c.gridwidth = 1;
         c.gridx = 1;
         c.gridy = 1;
-        pane.add(north, c);
+        panel.add(north, c);
 
         west = new JButton("West");
         west.setPreferredSize(new Dimension(8, 8));
@@ -55,7 +53,7 @@ public class Test {
         c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 2;
-        pane.add(west, c);
+        panel.add(west, c);
 
         east = new JButton("East");
         east.setPreferredSize(new Dimension(8, 8));
@@ -65,7 +63,7 @@ public class Test {
         c.gridwidth = 1;
         c.gridx = 2;
         c.gridy = 2;
-        pane.add(east, c);
+        panel.add(east, c);
 
         south = new JButton("South");
         south.setPreferredSize(new Dimension(8, 8));
@@ -75,7 +73,7 @@ public class Test {
         c.gridwidth = 1;
         c.gridx = 1;
         c.gridy = 3;
-        pane.add(south, c);
+        panel.add(south, c);
 
         yell = new JButton("Yell: Off");
         yell.setPreferredSize(new Dimension(8, 8));
@@ -85,7 +83,7 @@ public class Test {
         c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 3;
-        pane.add(yell, c);
+        panel.add(yell, c);
 
 
         JTextField input = new JTextField("");
@@ -97,35 +95,8 @@ public class Test {
         c.gridx = 0;       //aligned with button 2
         c.gridwidth = 3;   //3 columns wide
         c.gridy = 4;       //third row
-        pane.add(input, c);
+        panel.add(input, c);
     }
 
-    /**
-     *
-     * @param relPath: path from resources folder
-     */
-    private static ImageIcon getMainImage(String relPath) {
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(Test.class.getResource(relPath).toURI()));
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
-        Image imgd = img.getScaledInstance(350, 350, Image.SCALE_SMOOTH);
-        return new ImageIcon(imgd);
-    }
 
-    public static void main(String[] args) {
-
-        JFrame frame = new JFrame("GridBagLayoutDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JPanel panel = new JPanel(new GridBagLayout());
-        frame.setContentPane(panel);
-
-        populateGUI(frame.getContentPane());
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
-    }
 }
